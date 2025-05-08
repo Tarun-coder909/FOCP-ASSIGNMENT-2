@@ -1,0 +1,229 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+private:
+    string name;
+    int age;
+    string id;
+    string contactInfo;
+
+public:
+    Person() : name(""), age(0), id(""), contactInfo("") {}
+    Person(string name, int age, string id, string contactInfo) {
+        setName(name);
+        setAge(age);
+        setId(id);
+        setContactInfo(contactInfo);
+    }
+
+    void setName(string name) { if (!name.empty()) name = name; }
+    string getName() const { return name; }
+
+    void setAge(int age) { if (age >= 18 && age <= 100) age = age; }
+    int getAge() const { return age; }
+
+    void setId(string id) { id = id; }
+    string getId() const { return id; }
+
+    void setContactInfo(string contactInfo) { contactInfo = contactInfo; }
+    string getContactInfo() const { return contactInfo; }
+
+    void displayRole() const { cout << "Role: General Person" << endl; }
+};
+
+class Student : public Person {
+private:
+    string enrollmentDate;
+    string program;
+    float gpa;
+
+public:
+    Student() : enrollmentDate(""), program(""), gpa(0.0f) {}
+    Student(string name, int age, string id, string contactInfo, string enrollmentDate, string program, float gpa)
+        : Person(name, age, id, contactInfo) {
+        setEnrollmentDate(enrollmentDate);
+        setProgram(program);
+        setGPA(gpa);
+    }
+
+    void setEnrollmentDate(string enrollmentDate) { enrollmentDate = enrollmentDate; }
+    string getEnrollmentDate() const { return enrollmentDate; }
+
+    void setProgram(string program) { program = program; }
+    string getProgram() const { return program; }
+
+    void setGPA(float gpa) { if (gpa >= 0.0f && gpa <= 4.0f) gpa = gpa; }
+    float getGPA() const { return gpa; }
+
+    void displayRole() const { cout << "Role: Student in " << program << ", GPA: " << gpa << endl; }
+};
+
+class Professor : public Person {
+private:
+    string department;
+    string specialization;
+    string hireDate;
+
+public:
+    Professor() : department(""), specialization(""), hireDate("") {}
+    Professor(string name, int age, string id, string contactInfo, string department, string specialization, string hireDate)
+        : Person(name, age, id, contactInfo) {
+        setDepartment(department);
+        setSpecialization(specialization);
+        setHireDate(hireDate);
+    }
+
+    void setDepartment(string department) { department = department; }
+    string getDepartment() const { return department; }
+
+    void setSpecialization(string specialization) { specialization = specialization; }
+    string getSpecialization() const { return specialization; }
+
+    void setHireDate(string hireDate) { hireDate = hireDate; }
+    string getHireDate() const { return hireDate; }
+
+    void displayRole() const { cout << "Role: Professor in " << department << ", Specialization: " << specialization << endl; }
+};
+
+class Course {
+private:
+    string code;
+    string title;
+    int credits;
+    string description;
+
+public:
+    Course() : code(""), title(""), credits(0), description("") {}
+    Course(string code, string title, int credits, string description) {
+        setCode(code);
+        setTitle(title);
+        setCredits(credits);
+        setDescription(description);
+    }
+
+    void setCode(string code) { code = code; }
+    string getCode() const { return code; }
+
+    void setTitle(string title) { title = title; }
+    string getTitle() const { return title; }
+
+    void setCredits(int credits) { if (credits > 0) credits = credits; }
+    int getCredits() const { return credits; }
+
+    void setDescription(string description) { description = description; }
+    string getDescription() const { return description; }
+
+    void showInfo() const { cout << "Course: " << title << " (" << code << "), Credits: " << credits << endl; }
+};
+
+class Department {
+private:
+    string name;
+    string location;
+    double budget;
+
+public:
+    Department() : name(""), location(""), budget(0.0) {}
+    Department(string name, string location, double budget) {
+        setName(name);
+        setLocation(location);
+        setBudget(budget);
+    }
+
+    void setName(string name) { if (!name.empty()) name = name; }
+    string getName() const { return name; }
+
+    void setLocation(string location) { location = location; }
+    string getLocation() const { return location; }
+
+    void setBudget(double budget) { if (budget > 0) budget = budget; }
+    double getBudget() const { return budget; }
+
+    void showInfo() const { cout << "Department: " << name << ", Location: " << location << ", Budget: $" << budget << endl; }
+};
+
+class GradeBook {
+private:
+    string studentIds[100];
+    float grades[100];
+
+public:
+    void addGrade(string studentId, float grade) {
+        for (int i = 0; i < 100; ++i) {
+            if (studentIds[i].empty()) {
+                studentIds[i] = studentId;
+                grades[i] = grade;
+                break;
+            }
+        }
+    }
+
+    double calculateAverageGrade() {
+        double total = 0;
+        int count = 0;
+        for (int i = 0; i < 100; ++i) {
+            if (!studentIds[i].empty()) {
+                total += grades[i];
+                count++;
+            }
+        }
+        return (count == 0) ? 0.0 : total / count;
+    }
+
+    float getHighestGrade() {
+        float highest = -1;
+        for (int i = 0; i < 100; ++i) {
+            if (!studentIds[i].empty() && grades[i] > highest) {
+                highest = grades[i];
+            }
+        }
+        return highest;
+    }
+
+    void getFailingStudents() {
+        for (int i = 0; i < 100; ++i) {
+            if (!studentIds[i].empty() && grades[i] < 2.0) {
+                cout << studentIds[i] << " with grade: " << grades[i] << endl;
+            }
+        }
+    }
+};
+
+class EnrollmentManager {
+private:
+    string enrolledStudents[100];
+    string courseCodes[100];
+
+public:
+    void enrollStudent(string studentId, string courseCode) {
+        for (int i = 0; i < 100; ++i) {
+            if (enrolledStudents[i].empty()) {
+                enrolledStudents[i] = studentId;
+                courseCodes[i] = courseCode;
+                break;
+            }
+        }
+    }
+
+    void dropStudent(string studentId, string courseCode) {
+        for (int i = 0; i < 100; ++i) {
+            if (enrolledStudents[i] == studentId && courseCodes[i] == courseCode) {
+                enrolledStudents[i].clear();
+                courseCodes[i].clear();
+                break;
+            }
+        }
+    }
+
+    int getEnrollmentCount(string courseCode) {
+        int count = 0;
+        for (int i = 0; i < 100; ++i) {
+            if (courseCodes[i] == courseCode) {
+                count++;
+            }
+        }
+        return count;
+    }
+};
