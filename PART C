@@ -1,0 +1,113 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+private:
+    string name;
+    int age;
+    string id;
+    string contactInfo;
+
+public:
+    Person() : name(""), age(0), id(""), contactInfo("") {}
+    Person(string name, int age, string id, string contactInfo) {
+        setName(name);
+        setAge(age);
+        setId(id);
+        setContactInfo(contactInfo);
+    }
+
+    void setName(string name) { if (!name.empty()) this->name = name; }
+    string getName() const { return name; }
+
+    void setAge(int age) { this->age = age; }
+    int getAge() const { return age; }
+
+    void setId(string id) { this->id = id; }
+    string getId() const { return id; }
+
+    void setContactInfo(string contactInfo) { this->contactInfo = contactInfo; }
+    string getContactInfo() const { return contactInfo; }
+
+    virtual void displayDetails() const {
+        cout << "Name: " << name << ", Age: " << age << ", ID: " << id << ", Contact: " << contactInfo << endl;
+    }
+
+    virtual double calculatePayment() const {
+        return 0.0;
+    }
+};
+
+class Student : public Person {
+private:
+    string enrollmentDate;
+    string program;
+    float gpa;
+
+public:
+    Student() : enrollmentDate(""), program(""), gpa(0.0f) {}
+    Student(string name, int age, string id, string contactInfo, string enrollmentDate, string program, float gpa)
+        : Person(name, age, id, contactInfo) {
+        setEnrollmentDate(enrollmentDate);
+        setProgram(program);
+        setGPA(gpa);
+    }
+
+    void setEnrollmentDate(string enrollmentDate) { this->enrollmentDate = enrollmentDate; }
+    string getEnrollmentDate() const { return enrollmentDate; }
+
+    void setProgram(string program) { this->program = program; }
+    string getProgram() const { return program; }
+
+    void setGPA(float gpa) { if (gpa >= 0.0f && gpa <= 4.0f) this->gpa = gpa; }
+    float getGPA() const { return gpa; }
+
+    void displayDetails() const override {
+        Person::displayDetails();
+        cout << "Program: " << program << ", GPA: " << gpa << ", Enrollment Date: " << enrollmentDate << endl;
+    }
+
+    double calculatePayment() const override {
+        return 5000.0;
+    }
+};
+
+class Professor : public Person {
+private:
+    string department;
+    string specialization;
+    string hireDate;
+
+public:
+    Professor() : department(""), specialization(""), hireDate("") {}
+    Professor(string name, int age, string id, string contactInfo, string department, string specialization, string hireDate)
+        : Person(name, age, id, contactInfo) {
+        setDepartment(department);
+        setSpecialization(specialization);
+        setHireDate(hireDate);
+    }
+
+    void setDepartment(string department) { this->department = department; }
+    string getDepartment() const { return department; }
+
+    void setSpecialization(string specialization) { this->specialization = specialization; }
+    string getSpecialization() const { return specialization; }
+
+    void setHireDate(string hireDate) { this->hireDate = hireDate; }
+    string getHireDate() const { return hireDate; }
+
+    void displayDetails() const override {
+        Person::displayDetails();
+        cout << "Department: " << department << ", Specialization: " << specialization << ", Hire Date: " << hireDate << endl;
+    }
+
+    double calculatePayment() const override {
+        return 120000.0;
+    }
+};
+
+void testPolymorphism(Person* p) {
+    (*p).displayDetails();
+    cout << "Calculated Payment: $" << (*p).calculatePayment() << endl << endl;
+}
