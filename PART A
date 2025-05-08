@@ -1,0 +1,144 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+public:
+    string name;
+    int age;
+    string id;
+    string contactInfo;
+
+    Person() {
+        name = "";
+        age = 0;
+        id = "";
+        contactInfo = "";
+    }
+
+    Person(string a, int b, string c, string d) {
+        name = a;
+        age = b;
+        id = c;
+        contactInfo = d;
+    }
+
+    ~Person() {
+        cout << "Deleting Person: " << name << endl;
+    }
+
+    void displayRole() const {
+        cout << "Role: General Person" << endl;
+    }
+};
+
+class Student : public Person {
+public:
+    string enrollmentDate;
+    string program;
+    float gpa;
+
+    Student() {
+        enrollmentDate = "";
+        program = "";
+        gpa = 0.0;
+    }
+
+    Student(string a, int b, string c, string d, string e, string f, float g) : Person(a, b, c, d) {
+        enrollmentDate = e;
+        program = f;
+        gpa = g;
+    }
+
+    ~Student() {
+        cout << "Deleting Student: " << name << endl;
+    }
+
+    void displayRole() const {
+        cout << "Role: Student in " << program << ", GPA: " << gpa << endl;
+    }
+};
+
+class Professor : public Person {
+public:
+    string department;
+    string specialization;
+    string hireDate;
+
+    Professor() {
+        department = "";
+        specialization = "";
+        hireDate = "";
+    }
+
+    Professor(string a, int b, string c, string d, string e, string f, string g) : Person(a, b, c, d) {
+        department = e;
+        specialization = f;
+        hireDate = g;
+    }
+
+    ~Professor() {
+        cout << "Deleting Professor: " << name << endl;
+    }
+
+    void displayRole() const {
+        cout << "Role: Professor in " << department << ", Specialization: " << specialization << endl;
+    }
+};
+
+class Course {
+public:
+    string code;
+    string title;
+    int credits;
+    string description;
+
+    Course() {
+        code = "";
+        title = "";
+        credits = 0;
+        description = "";
+    }
+
+    Course(string a, string b, int c, string d) {
+        code = a;
+        title = b;
+        credits = c;
+        description = d;
+    }
+
+    ~Course() {
+        cout << "Deleting Course: " << title << endl;
+    }
+
+    void showInfo() const {
+        cout << "Course: " << title << " (" << code << "), Credits: " << credits << endl;
+    }
+};
+
+class Department {
+public:
+    string name;
+    string location;
+    double budget;
+
+    Department() {
+        name = "";
+        location = "";
+        budget = 0.0;
+    }
+
+    Department(string a, string b, double c) {
+        name = a;
+        location = b;
+        budget = c;
+    }
+
+    ~Department() {
+        cout << "Deleting Department: " << name << endl;
+    }
+
+    void showInfo() const {
+        cout << "Department: " << name << ", Location: " << location << ", Budget: $" << budget << endl;
+    }
+};
